@@ -22,6 +22,7 @@ jQuery(document).ready(function () {
             dataType: "text",
             beforeSubmit: function (data) {
                 jQuery(".has-error", box).removeClass("has-error");
+                jQuery(".errorInput", box).removeClass("errorInput");
                 jQuery(".error__text", box).text("");
                 jQuery(".load__box", box).css("display", "block");
             },
@@ -33,6 +34,9 @@ jQuery(document).ready(function () {
                     alert("Ошибка, Попробуйте позже.");
                     alert(data);
                 }
+                if (pdata.alert !== null && pdata.alert !== undefined) {
+                    alert(pdata.alert);
+                }
                 if (pdata.reload == true) {
                     location.reload();
                 } else if (pdata.location !== null && pdata.location !== undefined) {
@@ -42,9 +46,9 @@ jQuery(document).ready(function () {
                         for (var key in pdata.error) {
                             var val = pdata.error[key];
                             jQuery(".error__" + key + "", box).text(val);
-                            var el = jQuery("*[name=" + key + "]", box);
+                            var el = jQuery("*[name='" + key + "']", box);
+                            jQuery(el).addClass("errorInput");
                             jQuery(el).parents(".form-group").eq(0).addClass("has-error");
-                            jQuery(".codeConfirmImgSrc_img").attr("src", pdata.codeConfirmImgSrc);
                         }
                     } else {
                         jQuery(box).addClass("contentBody").html(pdata.text);

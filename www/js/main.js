@@ -2,6 +2,7 @@ var user = null;
 // get query arguments
 var $_GET = parseURLParams(window.location.href);
 jQuery(document).ready(function () {
+    
     //Проверим юзера и если нету - на авторизацию.
     var path = window.location.pathname;
     path = path.split('/');
@@ -11,6 +12,7 @@ jQuery(document).ready(function () {
             type: "POST",
             url: "http://femidaneo.ru/api/1/User/GetUser/",
             //data: ({a : aaa, b : bbb}),
+            dataType: 'text',
             success: function (data) {
                 try {
                     var pdata = JSON.parse(data);
@@ -27,6 +29,13 @@ jQuery(document).ready(function () {
                     })
                 } else {
                     user = pdata;
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "http://new.turneo.ru/api/1/Clients/Auth/",
+                        data: {"user":user},
+                        dataType: 'text',
+                        success: function (data) {}
+                    });                     
                     if (path == "index.html" || path == "") {
                         $(".animate").click(function () {
                             document.location.href = 'document.html';
@@ -50,11 +59,14 @@ jQuery(document).ready(function () {
                         <ul class="nav navbar-nav">\n\
                             <li><a href="document.html">Документы</a></li>\n\
                             <li><a href="var.html">Мои данные (Переменные)</a></li>\n\
+                            <li><a href="tour.html">Туризм</a></li>\n\
+                            <li><a href="country.html">Страны</a></li>\n\
+                            <li><a href="hotel.html">Отели</a></li>\n\
                             <li><a href="feed.html">Обратная связь</a></li>\n\
                         </ul>\n\
                         <form class="navbar-form navbar-left" method="GET" role="search" action="document.html">\n\
                             <div class="form-group">\n\
-                                <input type="text" name="nomer" class="form-control" placeholder="Номер докумета">\n\
+                                <input type="text" name="nomer" class="form-control" placeholder="Введите ID PL* для поиска">\n\
                             </div>\n\
                             <button type="submit" class="btn btn-primary">Поиск</button>\n\
                         </form>\n\
@@ -67,11 +79,9 @@ jQuery(document).ready(function () {
 
     jQuery("body").on("click", "a", function () {
         var text = jQuery(this).attr("question");
-        if (text != undefined)
-        {
+        if (text != undefined) {
             return confirm(text);
-        } else
-        {
+        } else {
             return true;
         }
     });

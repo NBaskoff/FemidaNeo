@@ -77,3 +77,4 @@ form textarea {
 .findBox .thumbnail .caption {color:#33077b;}
 .findBox .thumbnail .caption h3 {margin-top: 0px; font-size: 20px;}
 .valueTableInput {width: 100%; border:1px solid #33077b; padding: 2px 5px; box-sizing: border-box;}
+.table .errorInput {border: 1px solid red;}
